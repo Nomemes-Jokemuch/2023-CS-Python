@@ -3,6 +3,8 @@ from operator import truediv as div
 
 
 def prefix_evaluate(prefix_equation: str):
+    if prefix_equation == "":
+        return None
     ops = {"+": add, "-": sub, "*": mul, "/": div}
     value_stack = []
     prefix_equation = prefix_equation.split()
@@ -48,11 +50,12 @@ def to_prefix(equation: str) -> str:
     while stack:
         prefix.append(stack.pop())
 
-    return ''.join(reversed(prefix)).replace(" ", "").replace("", " ")
+    return ''.join(reversed(prefix)).replace(" ", "").replace("", " ").strip()
 
 
 def calculate(equation: str) -> int:
     return prefix_evaluate(to_prefix(equation))
 
 
-print(to_prefix("1 + (2 - 3) * 2"))
+str1 = " * 1 2 "
+print("9"+to_prefix(str1)+"8")
