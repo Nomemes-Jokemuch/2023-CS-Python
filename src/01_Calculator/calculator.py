@@ -1,18 +1,12 @@
-from operator import add, mul, sub, truediv
-from typing import List, Optional, Union
-
-ops = {"+": add, "-": sub, "*": mul, "/": truediv}
-
-
-def _split_if_string(string_or_list: Union[List[str], str]) -> List[str]:
-    return string_or_list.split() if isinstance(string_or_list, str) else string_or_list
+from operator import add, mul, sub
+from operator import truediv as div
+from typing import List
 
 
-def prefix_evaluate(prefix_equation: Union[List[str], str]) -> Optional[int]:
-    if not prefix_equation:
-        return None
-    prefix_equation = _split_if_string(prefix_equation)
+def prefix_evaluate(prefix_equation: str):
+    ops = {"+": add, "-": sub, "*": mul, "/": div}
     value_stack = []
+    prefix_equation = prefix_equation.split()
     while prefix_equation:
         el = prefix_equation.pop()
         if el not in ops:
@@ -25,19 +19,42 @@ def prefix_evaluate(prefix_equation: Union[List[str], str]) -> Optional[int]:
 
     return value_stack[0]
 
+assert prefix_evaluate("+ 2 3") == 5, "Must be 5"
+assert prefix_evaluate("+ - 2 3 5") == 4, "Must be 4"
 
-def to_prefix(equation: str) -> str:
-    op_stack = []
+
+def WhoAmI(symbol):
+    operators = set("+-*/^()")
+    return symbol not in operators
+
+
+def to_prefix(equation: str) -> List[str]:
+    priority = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
+    stack = []
     prefix = []
 
-    for el in equation.split()[::-1]:
-        pass
+    for symbol in reversed(equation):
+        if WhoAmI(symbol):
+            prefix.append(symbol)
+        elif symbol == ')':
+            stack.append(symbol)
+        elif symbol == '(':
+            while stack and stack[-1] != ')':
+                prefix.append(stack.pop())
+            stack.pop()
+        else:
+            while stack and priority.get(stack[-1], 0) >= priority.get(symbol, 0):
+                prefix.append(stack.pop())
+            stack.append(symbol)
 
-    while op_stack:
-        prefix.append(op_stack.pop())
+    while stack:
+        prefix.append(stack.pop())
 
-    return " ".join(prefix[::-1])
+    return ''.join(reversed(prefix)).replace(" ", "").replace("", " ")
 
 
 def calculate(equation: str) -> int:
     return prefix_evaluate(to_prefix(equation))
+
+
+print(to_prefix("1 + (2 - 3) * 2"))
