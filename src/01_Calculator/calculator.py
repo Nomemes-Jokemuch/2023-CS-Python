@@ -1,6 +1,5 @@
 from operator import add, mul, sub
 from operator import truediv as div
-from typing import List
 
 
 def prefix_evaluate(prefix_equation: str):
@@ -22,13 +21,12 @@ def prefix_evaluate(prefix_equation: str):
 assert prefix_evaluate("+ 2 3") == 5, "Must be 5"
 assert prefix_evaluate("+ - 2 3 5") == 4, "Must be 4"
 
-
 def WhoAmI(symbol):
     operators = set("+-*/^()")
     return symbol not in operators
 
 
-def to_prefix(equation: str) -> List[str]:
+def to_prefix(equation: str) -> str:
     priority = {'+': 1, '-': 1, '*': 2, '/': 2, '^': 3}
     stack = []
     prefix = []
