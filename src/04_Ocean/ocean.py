@@ -9,62 +9,58 @@ class Ocean:
         self.state = init_state
 
     def __str__(self) -> str:
-        return "\n".join(["".join(str(el) for el in row) for row in self.state])
+        return "\n".join([" ".join(str(el) for el in row) for row in self.state])
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.state!r})"
 
     def gen_next_quantum(self) -> "Ocean":
-        raise NotImplementedError
-        new_state = []
-        fish = 2
-        shrimp = 3
+        next_state = []
+        fsh = 2
+        shrmp = 3
 
         for i in range(len(self.state)):
-            new_row = []
+            next_row = []
             for j in range(len(self.state[i])):
                 if self.state[i][j] == 1:
-                    new_row.append(1)
+                    next_row.append(1)
                 else:
-                    n_fish = 0
-                    n_shrimp = 0
-                    neighbors = [
-                        (i - 1, j - 1),
-                        (i - 1, j),
-                        (i - 1, j + 1),
-                        (i, j - 1),
-                        (i, j + 1),
-                        (i + 1, j - 1),
-                        (i + 1, j),
-                        (i + 1, j + 1),
+                    nf = 0
+                    ns = 0
+                    near = [
+                        (i - 1, j - 1), (i - 1, j), (i - 1, j + 1),
+                        (i, j - 1), (i, j + 1),
+                        (i + 1, j - 1), (i + 1, j), (i + 1, j + 1),
                     ]
-                    for ni, nj in neighbors:
-                        if ni < 0 or nj < 0 or ni >= len(self.state) or nj >= len(self.state[i]):
-                            continue
-                        if self.state[ni][nj] == fish:
-                            n_fish += 1
-                        elif self.state[ni][nj] == shrimp:
-                            n_shrimp += 1
+                    for ni, nj in near:
+                        if ni < 0 or nj < 0 or ni >= len(self.state) or nj >= len(self.state[i]): continue
+                        if self.state[ni][nj] == fsh:
+                            nf += 1
+                        elif self.state[ni][nj] == shrmp:
+                            ns += 1
 
-                    if self.state[i][j] == fish:
-                        if n_fish < 2 or n_fish > 3:
-                            new_row.append(0)
+                    if self.state[i][j] == fsh:
+                        if nf < 2 or nf > 3:
+                            next_row.append(0)
                         else:
-                            new_row.append(2)
-                    elif self.state[i][j] == shrimp:
-                        if n_shrimp < 2 or n_shrimp > 3:
-                            new_row.append(0)
+                            next_row.append(2)
+
+                    elif self.state[i][j] == shrmp:
+                        if ns < 2 or ns > 3:
+                            next_row.append(0)
                         else:
-                            new_row.append(3)
-                    elif n_fish == fish and n_shrimp == shrimp:
-                        new_row.append(2)
-                    elif n_fish == 3:
-                        new_row.append(2)
+                            next_row.append(3)
+
+                    elif nf == fsh and ns == shrmp:
+                        next_row.append(2)
+                    elif nf == 3:
+                        next_row.append(2)
                     else:
-                        new_row.append(0)
-            new_state.append(new_row)
+                        next_row.append(0)
+                        
+            next_state.append(next_row)
 
-        return Ocean(init_state=new_state)
+        return Ocean(init_state=next_state)
 
 if __name__ == "__main__":
     n_quantums = int(sys.stdin.readline())
@@ -77,4 +73,4 @@ if __name__ == "__main__":
     ocean = Ocean(init_state=init_state)
     for _ in range(n_quantums):
         ocean = ocean.gen_next_quantum()
-    print(ocean)
+    print(ocean) 
