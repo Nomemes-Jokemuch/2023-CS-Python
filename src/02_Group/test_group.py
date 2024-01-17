@@ -48,11 +48,16 @@ class TestPerson:
 
     def test_ages(self, polina: Person):
         assert hasattr(polina, "full_ages")
-        assert polina.full_ages() == datetime.now(tz=timezone.utc).year - polina.bday.year
+        assert (
+            polina.full_ages() == datetime.now(tz=timezone.utc).year - polina.bday.year
+        )
 
         for i in range(10):
             polina.bday = date(1990 + i, 4, 12)
-            assert polina.full_ages() == datetime.now(tz=timezone.utc).year - polina.bday.year
+            assert (
+                polina.full_ages()
+                == datetime.now(tz=timezone.utc).year - polina.bday.year
+            )
 
     @staticmethod
     def test_eq(polina: Person):
@@ -108,7 +113,9 @@ class TestStudent:
         assert eval(repr(galina))  # noqa: S307
 
     def test_eq(self, galina: Student):
-        assert galina == Student("Galina", "Moskovskaya", "female", date(1992, 4, 12), 161, 5)
+        assert galina == Student(
+            "Galina", "Moskovskaya", "female", date(1992, 4, 12), 161, 5
+        )
 
     @staticmethod
     @pytest.mark.parametrize(

@@ -28,12 +28,23 @@ class Ocean:
                     nf = 0
                     ns = 0
                     near = [
-                        (i - 1, j - 1), (i - 1, j), (i - 1, j + 1),
-                        (i, j - 1), (i, j + 1),
-                        (i + 1, j - 1), (i + 1, j), (i + 1, j + 1),
+                        (i - 1, j - 1),
+                        (i - 1, j),
+                        (i - 1, j + 1),
+                        (i, j - 1),
+                        (i, j + 1),
+                        (i + 1, j - 1),
+                        (i + 1, j),
+                        (i + 1, j + 1),
                     ]
                     for ni, nj in near:
-                        if ni < 0 or nj < 0 or ni >= len(self.state) or nj >= len(self.state[i]): continue
+                        if (
+                            ni < 0
+                            or nj < 0
+                            or ni >= len(self.state)
+                            or nj >= len(self.state[i])
+                        ):
+                            continue
                         if self.state[ni][nj] == fsh:
                             nf += 1
                         elif self.state[ni][nj] == shrmp:
@@ -57,10 +68,11 @@ class Ocean:
                         next_row.append(2)
                     else:
                         next_row.append(0)
-                        
+
             next_state.append(next_row)
 
         return Ocean(init_state=next_state)
+
 
 if __name__ == "__main__":
     n_quantums = int(sys.stdin.readline())
@@ -73,4 +85,4 @@ if __name__ == "__main__":
     ocean = Ocean(init_state=init_state)
     for _ in range(n_quantums):
         ocean = ocean.gen_next_quantum()
-    print(ocean) 
+    print(ocean)
