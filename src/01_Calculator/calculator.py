@@ -21,11 +21,7 @@ def prefix_evaluate(prefix_equation: str):
     return value_stack[0]
 
 
-assert prefix_evaluate("+ 2 3") == 5, "Must be 5"
-assert prefix_evaluate("+ - 2 3 5") == 4, "Must be 4"
-
-
-def WhoAmI(symbol):
+def who_am_i(symbol):
     operators = set("+-*/^()")
     return symbol not in operators
 
@@ -36,7 +32,7 @@ def to_prefix(equation: str) -> str:
     prefix = []
 
     for symbol in reversed(equation):
-        if WhoAmI(symbol):
+        if who_am_i(symbol):
             prefix.append(symbol)
         elif symbol == ")":
             stack.append(symbol)
@@ -57,7 +53,3 @@ def to_prefix(equation: str) -> str:
 
 def calculate(equation: str) -> int:
     return prefix_evaluate(to_prefix(equation))
-
-
-str1 = " * 1 2 "
-print("9" + to_prefix(str1) + "8")

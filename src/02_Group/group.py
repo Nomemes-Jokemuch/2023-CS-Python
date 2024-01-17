@@ -1,21 +1,7 @@
-from datetime import date, datetime, timezone
-from typing import List
+from datetime import date
 
 
 class Person:
-    """
-    >>> p = Person('Ivan', 'Ivanov', 'male', date(1989, 4, 26))
-    >>> print(p)
-    Ivan Ivanov, male, 34 years
-
-    >>> p.full_ages()
-    34
-    >>> Person('Ivan', 'Ivanov', 'man', "1989.4.26")
-    Traceback (most recent call last):
-        ...
-    ValueError: bday must be date type
-    """
-
     def __init__(self, name, surname, sex, bday):
         self.name = name
         self.surname = surname
@@ -53,12 +39,6 @@ class Person:
 
 
 class Student(Person):
-    """
-    >>> s = Student('Ivan', 'Ivanov', 'male', date(1989, 4, 26), 161, 9)
-    >>> print(s)
-    Ivan Ivanov, male, 34 years, 161 group, 9 skill
-    """
-
     def __init__(self, name, surname, sex, bday, group, skill):
         super().__init__(name, surname, sex, bday)
         self.group = group
@@ -90,10 +70,6 @@ class Student(Person):
 
 
 class Group:
-    """
-    Encapsulates list of students
-    """
-
     def __init__(self, students) -> None:
         self.students = list(students)
 
@@ -105,16 +81,6 @@ class Group:
         if type(self) == type(__value):
             return True
         return False
-        # if len(self.students)!=len(__value.students):
-        #     return False
-
-        # flag=True
-
-        # for i in range(len(self.students)):
-        #     if self.students[i]!=__value.students[i]:
-        #         flag=False
-
-        # return flag
 
     def sort_by_age(self, reverse=False):
         self.students = list(self.students)

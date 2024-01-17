@@ -16,8 +16,8 @@ class Ocean:
 
     def gen_next_quantum(self) -> "Ocean":
         next_state = []
-        fsh = 2
-        shrmp = 3
+        fish = 2
+        shrimp = 3
 
         for i in range(len(self.state)):
             next_row = []
@@ -45,24 +45,24 @@ class Ocean:
                             or nj >= len(self.state[i])
                         ):
                             continue
-                        if self.state[ni][nj] == fsh:
+                        if self.state[ni][nj] == fish:
                             nf += 1
-                        elif self.state[ni][nj] == shrmp:
+                        elif self.state[ni][nj] == shrimp:
                             ns += 1
 
-                    if self.state[i][j] == fsh:
+                    if self.state[i][j] == fish:
                         if nf < 2 or nf > 3:
                             next_row.append(0)
                         else:
                             next_row.append(2)
 
-                    elif self.state[i][j] == shrmp:
+                    elif self.state[i][j] == shrimp:
                         if ns < 2 or ns > 3:
                             next_row.append(0)
                         else:
                             next_row.append(3)
 
-                    elif nf == fsh and ns == shrmp:
+                    elif nf == fish and ns == shrimp:
                         next_row.append(2)
                     elif nf == 3:
                         next_row.append(2)
