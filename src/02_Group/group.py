@@ -30,11 +30,11 @@ class Person:
         return f"{self.name} {self.surname}, {self.sex}, {self.full_ages()} years"
 
     def full_ages(self) -> str:
-        return date.today().year - self.bday.year
+        return date.now(tz=None).date().year - self.bday.year
 
     def __repr__(self):
         return (
-            f"Person('{self.name}', '{self.surname}', '{self.sex}', {repr(self.bday)})"
+            "Person", '{self.name}', '{self.surname}', '{self.sex}', {repr(self.bday)}
         )
 
 
@@ -66,7 +66,9 @@ class Student(Person):
         return True
 
     def __repr__(self):
-        return f"Student('{self.name}', '{self.surname}', '{self.sex}', {repr(self.bday)}, {self.group}, {self.skill})"
+        return (
+        "Student", '{self.name}', '{self.surname}', '{self.sex}', {repr(self.bday)}, {self.group}, {self.skill}
+            )
 
 
 class Group:
@@ -77,7 +79,7 @@ class Group:
         student_list = [f"Student({s})" for s in self.students]
         return f"Group({student_list})"
 
-    def __eq__(self, __value: object) -> bool:
+    def __eq__(self, __value: object):
         if type(self) == type(__value):
             return True
         return False
